@@ -3,11 +3,13 @@ package com.u3coding.rxjavatest;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
+import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -41,6 +43,18 @@ public class Apimanager {
     }
     public void getTopMovie(Subscriber<MovieEntity> subscriber,int start,int count){
         movieService.getTopMoive(start,count)
+                .map(new Func1<MovieEntity, ResponseBody>() {
+                    @Override
+                    public ResponseBody call(MovieEntity movieEntity) {
+                        return null;
+                    }
+                })
+                .map(new Func1<ResponseBody, MovieEntity>() {
+                    @Override
+                    public MovieEntity call(ResponseBody integer) {
+                        return null;
+                    }
+                })
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
